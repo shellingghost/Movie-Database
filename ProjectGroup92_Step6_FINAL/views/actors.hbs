@@ -1,0 +1,131 @@
+{{!-- 
+    Citation for the following codes:
+    Date: 02-19-2023
+    Adapted from
+    https://github.com/osu-cs340-ecampus/nodejs-starter-app
+ --}}
+
+<!-- actors.hbs -->
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/movies">Movies</a></li>
+        <li><a href="/directors">Directors</a></li>
+        <li><a href="/actors">Actors</a></li>
+        <li><a href="/genres">Genres</a></li>
+        <li><a href="/synopses">Synopses</a></li>
+    </ul>
+</nav>
+<h1>Actors</h1>
+<p>Movie Actors</p>
+
+{{!-- Actors Table --}}
+<table id="Actors-table">
+
+    {{!-- Header section --}}
+    <thead>
+        <tr>
+            {{#each actorsData.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row --}}
+        {{#each actorsData}}
+        <tr>
+            <td>{{this.actor_id}}</td>
+            <td>{{this.first_name}}</td>
+            <td>{{this.last_name}}</td>
+            <td>{{this.gender}}</td>
+            <td>{{formatDate this.birthdate}}</td>
+            <td>{{this.nationality}}</td>
+            <td>{{this.biography}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a new actor --}}
+<h2>Add Actor</h2>
+<p>To add a new actor, please enter their information below and click 'Submit'!</p>
+
+<form id="add-actor-form-ajax">
+
+    <label for="input-first_name">First Name: </label>
+    <input type="text" name="input-first_name" id="input-first_name" required>
+
+    <label for="input-last_name">Last Name: </label>
+    <input type="text" name="input-last_name" id="input-last_name" required>
+
+    <label for="input-gender">Gender: </label>
+    <input type="text" name="input-gender" id="input-gender" required>
+
+    <label for="input-birthdate">Birthdate (YYYY-MM-DD): </label>
+    <input type="text" name="input-birthdate" id="input-birthdate" pattern="^\d{4}-\d{2}-\d{2}$" title="Please enter a valid birthdate in the format YYYY-MM-DD">
+
+    <label for="input-nationality">Nationality: </label>
+    <input type="text" name="input-nationality" id="input-nationality">
+
+    <label for="input-biography">Biography </label>
+    <input type="text" name="input-biography" id="input-biography">
+
+    <input type="submit">
+</form>
+
+{{!-- Movie_Cast Table (intersection) --}}
+<h2>Movie_Cast </h2>
+<p>Actors in the movies</p>
+<table id="Movie_Cast-table">
+    <thead>
+        <tr>
+            <th>cast_id</th>
+            <th>Movie Title</th>
+            <th>Actor Full Name</th>
+            <th>Character Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each castData}}
+        <tr>
+            <td>{{this.cast_id}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.full_name}}</td>
+            <td>{{this.character_name}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h2>Add Cast</h2>
+<p>Choose Movie Title & Actor Name and enter character Name</p>
+<form id="add-movie_cast-form-ajax">
+    <label for="input-movie-id">Movie Title </label>
+    <select name="add-movie-id" id="add-movie-id">
+        {{#each moviesData}}
+        <option value="{{this.movie_id}}">{{this.title}} ({{this.movie_id}})</option>
+        {{/each}}
+    </select>
+
+    <label for="input-actor-id">Actor Name </label>
+    <select name="add-actor-id" id="add-actor-id">
+        {{#each actorsData}}
+        <option value="{{this.actor_id}}">{{this.first_name}} {{this.last_name}} ({{this.actor_id}})</option>
+        {{/each}}
+    </select>
+
+     <label for="input-character-name">character name: </label>
+    <input type="text" name="add-character-name" id="add-character-name" required>
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_actor.js"></script>

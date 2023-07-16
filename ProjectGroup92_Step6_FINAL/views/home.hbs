@@ -1,0 +1,67 @@
+{{!-- 
+    Citation for the following codes:
+    Date: 02-19-2023
+    Adapted from
+    https://github.com/osu-cs340-ecampus/nodejs-starter-app
+ --}}
+
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<html>
+
+{{!-- Nav Bar --}}
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/movies">Movies</a></li>
+    <li><a href="/directors">Directors</a></li>
+    <li><a href="/actors">Actors</a></li>
+    <li><a href="/genres">Genres</a></li>
+    <li><a href="/synopses">Synopses</a></li>
+  </ul>
+</nav>
+
+{{!-- Header --}}
+
+<head>
+  <title>Movie Database</title>
+</head>
+
+<body>
+  <h1>Welcome to my Movie Database</h1>
+  <p>Check out our collection of movies!</p>
+
+  {{!-- Database Table --}}
+  <table id="total_movies-table">
+
+    <thead>
+      <tr>
+        {{#each moviesData.[0]}}
+        <th>
+          {{@key}}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
+
+    {{!-- Table Body section --}}
+    <tbody>
+      {{!-- For each row --}}
+      {{#each moviesData}}
+      <tr>
+        <td>{{this.title}}</td>
+        <td>{{this.released_year}}</td>
+        <td>{{this.genres}}</td>
+        <td>{{this.director_name}}</td>
+        <td>{{this.actors}}</td>
+        <td>{{this.rating}}</td>
+        <td>{{this.language}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+
+</body>
+
+</html>

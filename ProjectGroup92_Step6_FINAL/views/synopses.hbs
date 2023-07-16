@@ -1,0 +1,95 @@
+{{!-- 
+    Citation for the following codes:
+    Date: 02-19-2023
+    Adapted from
+    https://github.com/osu-cs340-ecampus/nodejs-starter-app
+ --}}
+
+<!-- synopsis.hbs -->
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/movies">Movies</a></li>
+    <li><a href="/directors">Directors</a></li>
+    <li><a href="/actors">Actors</a></li>
+    <li><a href="/genres">Genres</a></li>
+    <li><a href="/synopses">Synopses</a></li>
+  </ul>
+</nav>
+<h1>Synopses</h1>
+<p></p>
+
+<table id="Synopses-table">
+    <thead>
+        <tr>
+            {{#each data1.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each data1}}
+        <tr data-value={{this.synopsis_id}}>
+            <td>{{this.synopsis_id}}</td>
+            <td>{{this.movie_title}}</td>
+            <td class="long-text">{{this.synopsis}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a new synopsis --}}
+<h2>Add Synopsis</h2>
+<p>To add a new synopsis, choose the movie title or New, enter the description below and submit.
+    <br>A movie can have multiple synopses or none.
+</p>
+
+<form id="add-synopsis-form-ajax">
+
+    <label for="input-movie-id">Select a movie to enter its synopsis: </label>
+    <select name="input-movie-id" id="input-movie-id-ajax">
+        <option value="">New Synopsis </option>
+        {{#each data2}}
+        <option value="{{this.movie_id}}">{{this.movie_title}} ({{this.movie_id}})</option>
+        {{/each}}
+    </select>
+
+    <label for="input-synopsis">Synopsis: </label>
+    <input type="text" name="input-synopsis" id="input-synopsis" required>
+
+    <input type="submit">
+</form>
+<script src="./js/add_synopses.js"></script>
+
+{{!-- Form to update a synopsis --}}
+<h2>Update Synopsis</h2>
+<p>Choose synopsis, choose the movie title, enter the description below and submit</p>
+<form id="update-synopsis-form-ajax">
+
+    <label for="update-synopsis-id">Select a synopsis_id: </label>
+    <select name="update-synopsis-id" id="update-synopsis-id">
+        {{#each data1}}
+        <option value="{{this.synopsis_id}}">{{this.movie_title}} ({{this.synopsis_id}})</option>
+        {{/each}}
+    </select>
+
+    <label for="update-synopsis">Update the Synopsis: </label>
+    <input type="text" name="update-synopsis" id="update-synopsis" required>
+
+    <label for="update-movie-id">Choose the movie for this synopsis: </label>
+    <select name="update-movie-id" id="update-movie-id">
+        <option value="">None </option>
+        {{#each data2}}
+        <option value="{{this.movie_id}}">{{this.movie_title}} ({{this.movie_id}})</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/update_synopsis.js"></script>

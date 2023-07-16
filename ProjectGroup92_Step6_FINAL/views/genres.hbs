@@ -1,0 +1,107 @@
+{{!-- 
+    Citation for the following codes:
+    Date: 02-19-2023
+    Adapted from
+    https://github.com/osu-cs340-ecampus/nodejs-starter-app
+ --}}
+
+<!-- genres.hbs -->
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/movies">Movies</a></li>
+        <li><a href="/directors">Directors</a></li>
+        <li><a href="/actors">Actors</a></li>
+        <li><a href="/genres">Genres</a></li>
+        <li><a href="/synopses">Synopses</a></li>
+    </ul>
+</nav>
+<h1>Genres</h1>
+<p></p>
+
+{{!-- Genres Table --}}
+<table id="Genres-table">
+
+    {{!-- Header section --}}
+    <thead>
+        <tr>
+            {{#each genresData.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row --}}
+        {{#each genresData}}
+        <tr>
+            <td>{{this.genre_id}}</td>
+            <td>{{this.genre_name}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a new genre --}}
+<h2>Add Genre</h2>
+<p>To add a new genre, please enter the genre name and submit</p>
+<form id="add-genre-form-ajax">
+    <label for="input-genre_name">Genre Name: </label>
+    <input type="text" name="input-genre_name" id="input-genre_name">
+
+    <input type="submit">
+</form>
+
+{{!-- Create an intsersection table --}}
+<h2>Movie_Genres </h2>
+<p></p>
+<table id="Movie_Genres-table">
+    <thead>
+        <tr>
+            <th>Movie Genres ID</th>
+            <th>Movie Title</th>
+            <th>Genre Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each movie_genresData}}
+        <tr>
+            <td>{{this.movie_genres_id}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.genre_name}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a new movie_genre data --}}
+<h2>Add Movie Genre</h2>
+<p>Choose Movie title and its Genre
+    <br> 
+</p>
+<form id="add-movie_genres-form-ajax">
+    <label for="input-movie-id">Movie Title </label>
+    <select name="add-movie-id" id="add-movie-id">
+        {{#each moviesData}}
+        <option value="{{this.movie_id}}">{{this.title}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-genre">Genre Name </label>
+    <select name="add-genre-id" id="add-genre-id">
+        {{#each genresData}}
+        <option value="{{this.genre_id}}">{{this.genre_name}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_genre.js"></script>

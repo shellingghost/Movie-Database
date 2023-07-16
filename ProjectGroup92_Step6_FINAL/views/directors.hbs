@@ -1,0 +1,123 @@
+{{!-- 
+    Citation for the following codes:
+    Date: 02-19-2023
+    Adapted from
+    https://github.com/osu-cs340-ecampus/nodejs-starter-app
+ --}}
+
+<!-- directors.hbs -->
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/movies">Movies</a></li>
+        <li><a href="/directors">Directors</a></li>
+        <li><a href="/actors">Actors</a></li>
+        <li><a href="/genres">Genres</a></li>
+        <li><a href="/synopses">Synopses</a></li>
+    </ul>
+</nav>
+<h1>Directors</h1>
+<p>Movie Directors</p>
+
+{{!-- Directors Table --}}
+<table id="Directors-table">
+    <thead>
+        <tr>
+            {{#each directorsData.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each directorsData}}
+        <tr>
+            <td>{{this.director_id}}</td>
+            <td>{{this.first_name}}</td>
+            <td>{{this.last_name}}</td>
+            <td>{{this.gender}}</td>
+            <td>{{formatDate this.birthdate}}</td>
+            <td>{{this.nationality}}</td>
+            <td>{{this.biography}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a new director --}}
+<h2>Add a Director</h2>
+<p>Please enter the information and click submit</p>
+<form id="add-director-form-ajax">
+    <label for="input-first_name">First Name: </label>
+    <input type="text" name="input-first_name" id="input-first_name" required>
+
+    <label for="input-last_name">Last Name: </label>
+    <input type="text" name="input-last_name" id="input-last_name" required>
+
+    <label for="input-gender">Gender: </label>
+    <input type="text" name="input-gender" id="input-gender" required>
+
+    <label for="input-birthdate">Birthdate (YYYY-MM-DD): </label>
+    <input type="text" name="input-birthdate" id="input-birthdate" pattern="^\d{4}-\d{2}-\d{2}$" title="Please enter a valid birthdate in the format YYYY-MM-DD">
+
+    <label for="input-nationality">Nationality: </label>
+    <input type="text" name="input-nationality" id="input-nationality">
+
+    <label for="input-biography">Biography </label>
+    <input type="text" name="input-biography" id="input-biography">
+
+    <input type="submit">
+</form>
+
+{{!-- Create an intsersection table --}}
+<h2>Movie_Directors </h2>
+<p>List of movies and directors</p>
+<table iD="Movie_Directors-table">
+    <thead>
+        <tr>
+            <th>movie_directors_id</th>
+            <th>Title</th>
+            <th>Director</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each movie_directorsData}}
+        <tr>
+            <td>{{this.movie_directors_id}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.full_name}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a new movie_director data --}}
+<h2>Add Movie Director</h2>
+<p>
+    To add a new director with film, please enter their information below and click 'Submit'!
+</p>
+<form id="add-movie_directors-form-ajax">
+    <label for="input-movie-id">Movie Title </label>
+    <select name="add-movie-id" id="add-movie-id">
+        {{#each moviesData}}
+        <option value="{{this.movie_id}}">{{this.title}} ({{this.movie_id}})</option>
+        {{/each}}
+    </select>
+
+    <label for="input-director">Director Full Name (director_id)</label>
+    <select name="add-director-id" id="add-director-id">
+        {{#each directorsData}}
+        <option value="{{this.director_id}}">{{this.first_name}} {{this.last_name}} ({{this.director_id}})</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+</form>
+
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_director.js"></script>
